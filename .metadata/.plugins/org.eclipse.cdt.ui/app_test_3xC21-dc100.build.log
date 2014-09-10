@@ -1,0 +1,5 @@
+
+**** Build of configuration Debug for project app_test_3xC21-dc100 ****
+
+xmake CONFIG=Debug all 
+xmake: *** [bin/Debug/demo_app_Debug.xe] Error 2

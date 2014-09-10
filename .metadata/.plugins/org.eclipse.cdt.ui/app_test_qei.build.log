@@ -1,0 +1,7 @@
+
+**** Clean-only build of configuration Debug for project app_test_qei ****
+
+xmake CONFIG=Debug clean 
+Cleaning /home/heather/demo-workspace/sc_sncn_motorcontrol/app_test_qei
+rm -rf './bin/Debug'
+rm -rf './.build_Debug'

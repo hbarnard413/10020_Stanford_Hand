@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<xpd>
+    <components>
+        <component description = "the NODE CONFIGURATION is designed to define various hardware configurations possible with different SOMANET modules" type = "demoCode" scope = "General Use" path = "module_nodeconfig" local = "false" id = "module_nodeconfig" name = "SOMANET NODE CONFIGURATION module">
+            <board>XK-SN-1BH12-E</board>
+            <board>XK-SN-1BQ12-E</board>
+            <board>SOMANET CORE C22</board>
+            <keyword>SOMANET</keyword>
+        </component>
+        <component description = "An xSCOPE wrapper to turn xSCOPE on and off in SOMANET blocks" type = "demoCode" scope = "General Use" path = "module_xscope-wrapper" local = "false" id = "module_xscope-wrapper" name = "SOMANET xSCOPE Usage wrapper">
+            <board>SOMANET</board>
+            <keyword>xSCOPE</keyword>
+        </component>
+    </components>
+    <description>The SOMANET BASE software component is a collection of essential modules required for the majority of SOMANET-based applications.</description>
+    <location>git://github.com/synapticon/sc_somanet-base.git</location>
+    <name>sc_somanet-base</name>
+    <maintainer>Synapticon</maintainer>
+    <partnumber>XM-005810-DH</partnumber>
+    <release parenthash = "2d4a154675b2d9e60a62af05ffcdfceb9ae15463" version = "1.0.0beta0" githash = "522d59520c03ff0cb5a77a3c80d0d8b4c035e685"></release>
+    <release parenthash = "251f28e0e89cd91e4d59b76940e2c25d39e93e10" version = "1.0.1beta0" githash = "94753ef278124e110a820b434818368ce1dda5d9"></release>
+    <release parenthash = "8d214c2d2ac812272df8afa3ee5af3872d7e7c5b" version = "1.0.1beta1" githash = "d021f519e978b8e45a77b809974d71589eb556a7"></release>
+    <release parenthash = "785b2cc7b967258b9e51841d02511329ab254e3d" version = "1.0.1beta2" githash = "9fb6d59d706ac32f8129d75f46ac6079f473292d"></release>
+    <release parenthash = "2b47ee5cbead720af9fcefd16064b821cbfb55a0" version = "1.0.1beta3" githash = "db515aa8fe90eae3d37c39a7269042199a5401b1"></release>
+    <release parenthash = "db515aa8fe90eae3d37c39a7269042199a5401b1" version = "1.0.1rc0" githash = "c61053d7f43ccba1bed5fd0865786f84f0367abf"></release>
+    <release parenthash = "ee3c5e2f436239f9fc41940c66879a6e5f4d30a7" version = "1.0.1rc1" githash = "93f945d2a7a92c92e5369c32234bf34cffe2aefd"></release>
+    <release parenthash = "fa17885a51efc6b3fca97ffee96c1694599aa2ac" version = "1.0.1rc2"></release>
+    <subpartnumber>XM-005811-SM</subpartnumber>
+    <vendor>XMOS</vendor>
+    <version_defines></version_defines>
+    <xcore_repo>git://github.com/xcore/sc_somanet-base.git</xcore_repo>
+    <xpd_version>1.0</xpd_version>
+</xpd>
