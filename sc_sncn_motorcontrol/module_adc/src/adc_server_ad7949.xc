@@ -291,7 +291,7 @@ void adc_ad7949( chanend c_adc,
 }
 
 
-void adc_ad7949_triggered( chanend c_adc,
+void adc_ad7949_triggered_node0( chanend c_adc,
                            chanend c_trig,
                            clock clk,
                            buffered out port:32 p_sclk_conv_mosib_mosia,
@@ -370,4 +370,170 @@ void adc_ad7949_triggered( chanend c_adc,
         }
     }
 }
+
+
+
+void adc_ad7949_triggered_node1( chanend c_adc,
+                           chanend c_trig,
+                           clock clk,
+                           buffered out port:32 p_sclk_conv_mosib_mosia,
+                           in buffered port:32 p_data_a,
+                           in buffered port:32 p_data_b )
+{
+    timer t;
+    unsigned int ts;
+    int command;
+    unsigned char ct;
+    const unsigned int adc_config_mot     =   0b11110001001001;   /* Motor current (ADC Channel 0), unipolar, referenced to GND */
+    const unsigned int adc_config_other[] = { 0b10110001001001,   // Temperature
+                                              0b11110101001001,   // ADC Channel 2, unipolar, referenced to GND  voltage and current
+                                              0b11111001001001,   // ADC Channel 4, unipolar, referenced to GND
+                                              0b11111011001001 }; // ADC Channel 5, unipolar, referenced to GND
+    const unsigned int delay = (11*USEC_FAST) / 3; // 3.7 us
+    static unsigned int adc_data_a[5];
+    static unsigned int adc_data_b[5];
+    unsigned short adc_index = 0;
+    configure_adc_ports(clk, p_sclk_conv_mosib_mosia, p_data_a, p_data_b);
+
+    while (1)
+    {
+#pragma ordered
+        select
+        {
+        case inct_byref(c_trig, ct):
+            if (ct == XS1_CT_END)
+            {
+                t :> ts;
+                t when timerafter(ts + 7080) :> ts; // 6200
+                adc_ad7949_singleshot( p_sclk_conv_mosib_mosia, p_data_a, p_data_b, clk,
+                                       adc_config_mot,  adc_config_other, delay, t, adc_data_a, adc_data_b, adc_index);
+            }
+            break;
+
+        case c_adc :> command:
+            switch(command)
+            {
+            case ADC_CURRENT_REQ:
+                master
+                {
+                    c_adc <: adc_data_a[4];
+                    c_adc <: adc_data_b[4];
+                }
+                break;
+
+            case ADC_ALL_REQ:
+                master
+                {
+                    c_adc <: adc_data_a[0];
+                    c_adc <: adc_data_a[1];
+                    c_adc <: adc_data_a[2];
+                    c_adc <: adc_data_a[3];
+                    c_adc <: adc_data_a[4];
+                    c_adc <: adc_data_b[0];
+                    c_adc <: adc_data_b[1];
+                    c_adc <: adc_data_b[2];
+                    c_adc <: adc_data_b[3];
+                    c_adc <: adc_data_b[4];
+                }
+                break;
+
+            case ADC_EXTERNAL_POT:
+                master
+                {
+                    c_adc <: adc_data_a[3];
+                    c_adc <: adc_data_b[3];
+                }
+                break;
+
+            default:
+                break;
+            }
+            break;
+        }
+    }
+}
+
+
+
+void adc_ad7949_triggered_node2( chanend c_adc,
+                           chanend c_trig,
+                           clock clk,
+                           buffered out port:32 p_sclk_conv_mosib_mosia,
+                           in buffered port:32 p_data_a,
+                           in buffered port:32 p_data_b )
+{
+    timer t;
+    unsigned int ts;
+    int command;
+    unsigned char ct;
+    const unsigned int adc_config_mot     =   0b11110001001001;   /* Motor current (ADC Channel 0), unipolar, referenced to GND */
+    const unsigned int adc_config_other[] = { 0b10110001001001,   // Temperature
+                                              0b11110101001001,   // ADC Channel 2, unipolar, referenced to GND  voltage and current
+                                              0b11111001001001,   // ADC Channel 4, unipolar, referenced to GND
+                                              0b11111011001001 }; // ADC Channel 5, unipolar, referenced to GND
+    const unsigned int delay = (11*USEC_FAST) / 3; // 3.7 us
+    static unsigned int adc_data_a[5];
+    static unsigned int adc_data_b[5];
+    unsigned short adc_index = 0;
+    configure_adc_ports(clk, p_sclk_conv_mosib_mosia, p_data_a, p_data_b);
+
+    while (1)
+    {
+#pragma ordered
+        select
+        {
+        case inct_byref(c_trig, ct):
+            if (ct == XS1_CT_END)
+            {
+                t :> ts;
+                t when timerafter(ts + 7080) :> ts; // 6200
+                adc_ad7949_singleshot( p_sclk_conv_mosib_mosia, p_data_a, p_data_b, clk,
+                                       adc_config_mot,  adc_config_other, delay, t, adc_data_a, adc_data_b, adc_index);
+            }
+            break;
+
+        case c_adc :> command:
+            switch(command)
+            {
+            case ADC_CURRENT_REQ:
+                master
+                {
+                    c_adc <: adc_data_a[4];
+                    c_adc <: adc_data_b[4];
+                }
+                break;
+
+            case ADC_ALL_REQ:
+                master
+                {
+                    c_adc <: adc_data_a[0];
+                    c_adc <: adc_data_a[1];
+                    c_adc <: adc_data_a[2];
+                    c_adc <: adc_data_a[3];
+                    c_adc <: adc_data_a[4];
+                    c_adc <: adc_data_b[0];
+                    c_adc <: adc_data_b[1];
+                    c_adc <: adc_data_b[2];
+                    c_adc <: adc_data_b[3];
+                    c_adc <: adc_data_b[4];
+                }
+                break;
+
+            case ADC_EXTERNAL_POT:
+                master
+                {
+                    c_adc <: adc_data_a[3];
+                    c_adc <: adc_data_b[3];
+                }
+                break;
+
+            default:
+                break;
+            }
+            break;
+        }
+    }
+}
+
+
 

@@ -41,6 +41,10 @@ void adc_ad7949( chanend c_adc,
  * It controls two devices so that two channels can be sampled
  * simultaneously.
  *
+ * The different versions nodeN will apply for parallel execution
+ * on different NODES. This is due to the use of static variables
+ * that will problems if several instances of a function is created.
+ *
  * @param	c_adc channel to receive ADC output
  * @param	c_trig channel to trigger adc from the PWM modules
  *
@@ -51,9 +55,24 @@ void adc_ad7949( chanend c_adc,
  * @param p_data_b 1-bit port for ADC data channel 1
  *
  */
-void adc_ad7949_triggered( chanend c_adc,
+void adc_ad7949_triggered_node0( chanend c_adc,
                            chanend c_trig,
                            clock clk,
                            buffered out port:32 p_sclk_conv_mosib_mosia,
                            in buffered port:32 p_data_a,
                            in buffered port:32 p_data_b );
+
+void adc_ad7949_triggered_node1( chanend c_adc,
+                           chanend c_trig,
+                           clock clk,
+                           buffered out port:32 p_sclk_conv_mosib_mosia,
+                           in buffered port:32 p_data_a,
+                           in buffered port:32 p_data_b );
+
+void adc_ad7949_triggered_node2( chanend c_adc,
+                           chanend c_trig,
+                           clock clk,
+                           buffered out port:32 p_sclk_conv_mosib_mosia,
+                           in buffered port:32 p_data_a,
+                           in buffered port:32 p_data_b );
+

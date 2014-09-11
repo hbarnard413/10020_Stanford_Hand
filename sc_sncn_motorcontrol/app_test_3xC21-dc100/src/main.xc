@@ -240,8 +240,8 @@ int main(void) {
             par
             {
                 /* ADC Loop */
-              //  adc_ad7949_triggered(c_adc_0, c_adctrig_0, clk_adc_0, p_ifm_adc_sclk_conv_mosib_mosia_0, p_ifm_adc_miso_0,
-                 //       p_ifm_adc_conv_0);
+                adc_ad7949_triggered_node0(c_adc_0, c_adctrig_0, clk_adc_0, p_ifm_adc_sclk_conv_mosib_mosia_0, p_ifm_adc_miso_0,
+                        p_ifm_adc_conv_0);
 
                 /* PWM Loop */
                 do_pwm_inv_triggered(c_pwm_ctrl_0, c_adctrig_0,
@@ -334,7 +334,7 @@ int main(void) {
             par
             {
                 /* ADC Loop */
-                adc_ad7949_triggered(c_adc_1, c_adctrig_1, clk_adc_1, p_ifm_adc_sclk_conv_mosib_mosia_1, p_ifm_adc_miso_1,
+                adc_ad7949_triggered_node1(c_adc_1, c_adctrig_1, clk_adc_1, p_ifm_adc_sclk_conv_mosib_mosia_1, p_ifm_adc_miso_1,
                         p_ifm_adc_conv_1);
 
                 /* PWM Loop */
@@ -428,7 +428,7 @@ int main(void) {
             par
             {
                 /* ADC Loop */
-                adc_ad7949_triggered(c_adc_2, c_adctrig_2, clk_adc_2, p_ifm_adc_sclk_conv_mosib_mosia_2, p_ifm_adc_miso_2,
+                adc_ad7949_triggered_node2(c_adc_2, c_adctrig_2, clk_adc_2, p_ifm_adc_sclk_conv_mosib_mosia_2, p_ifm_adc_miso_2,
                         p_ifm_adc_conv_2);
 
                 /* PWM Loop */
@@ -469,3 +469,4 @@ int main(void) {
 
     return 0;
 }
+
