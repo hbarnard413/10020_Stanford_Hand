@@ -43,7 +43,8 @@ void adc_ad7949( chanend c_adc,
  *
  * The different versions nodeN will apply for parallel execution
  * on different NODES. This is due to the use of static variables
- * that will problems if several instances of a function is created.
+ * that will produce problems if several instances of a function 
+ * are created.
  *
  * @param	c_adc channel to receive ADC output
  * @param	c_trig channel to trigger adc from the PWM modules
