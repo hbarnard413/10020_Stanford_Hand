@@ -1,6 +1,0 @@
-
-**** Clean-only build of configuration Default for project module_com-detect ****
-
-xmake -f .makefile clean 
-xmake: .makefile: No such file or directory
-xmake: *** No rule to make target `.makefile'.  Stop.
