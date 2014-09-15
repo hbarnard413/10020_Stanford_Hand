@@ -41,6 +41,11 @@ void adc_ad7949( chanend c_adc,
  * It controls two devices so that two channels can be sampled
  * simultaneously.
  *
+ * The different versions nodeN will apply for parallel execution
+ * on different NODES. This is due to the use of static variables
+ * that will produce problems if several instances of a function 
+ * are created.
+ *
  * @param	c_adc channel to receive ADC output
  * @param	c_trig channel to trigger adc from the PWM modules
  *
