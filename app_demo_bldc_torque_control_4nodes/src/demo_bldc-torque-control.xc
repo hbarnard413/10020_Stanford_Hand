@@ -11,7 +11,7 @@
 #include <refclk.h>
 #include <xscope_wrapper.h>
 
-#include <3xC21+dc100.inc>
+#include <C22-3xC21+dc100.inc>
 
 #include <hall_server.h>
 #include <qei_server.h>
@@ -34,6 +34,8 @@ on stdcore[NODE_1_IFM_TILE]:clock clk_adc_1 = XS1_CLKBLK_1;
 on stdcore[NODE_1_IFM_TILE]:clock clk_pwm_1 = XS1_CLKBLK_REF;
 on stdcore[NODE_2_IFM_TILE]:clock clk_adc_2 = XS1_CLKBLK_1;
 on stdcore[NODE_2_IFM_TILE]:clock clk_pwm_2 = XS1_CLKBLK_REF;
+on stdcore[NODE_3_IFM_TILE]:clock clk_adc_3 = XS1_CLKBLK_1;
+on stdcore[NODE_3_IFM_TILE]:clock clk_pwm_3 = XS1_CLKBLK_REF;
 
 //#define ENABLE_xscope
 
@@ -48,7 +50,7 @@ void xscope_initialise_1()
 }
 
 /* Test Profile Torque Function */
-void profile_torque_test(chanend ?c_torque_ctrl)
+void profile_torque_test(chanend c_torque_ctrl)
 {
 
 	int target_torque = 200; 	//(desired torque/torque_constant)  * IFM resolution
@@ -110,41 +112,27 @@ int main(void)
     chan c_watchdog_2; // node 2 WDT channel
     chan c_adc_2;//node 2 adc channel
 
+    chan c_qei_p1_3, c_qei_p2_3, c_qei_p3_3; // node 3 qei channels
+    chan c_hall_p1_3, c_hall_p2_3, c_hall_p3_3, c_hall_p4_3, c_hall_p5_3,
+            c_hall_p6_3; // node 3 hall channels
+    chan c_commutation_p1_3, c_commutation_p2_3, c_commutation_p3_3, c_signal_3; // node 3 commutation channels
+    chan c_pwm_ctrl_3, c_adctrig_3; // node 3 pwm channels
+    chan c_torque_ctrl_3; // node 3 velocity control channel
+    chan c_velocity_ctrl_3; // node 3 velocity control channel
+    chan c_watchdog_3; // node 3 WDT channel
+    chan c_adc_3;//node 2 adc channel
+
 	    par
 	        {
-	            //APP - C21 node 0
-	            on tile[NODE_0_APP_TILE]:
+	            //APP - C22 node 0
+	            on tile[NODE_0_APP_TILE_1]:
 	            {
 	                par {
                             {
                                 //printstrln("I am 0");
                                 delay_seconds(2);
-                                //profile_velocity_test(c_velocity_ctrl_0, c_hall_p4_0);
                                 profile_torque_test(c_torque_ctrl);
                             }
-
-                             //Velocity Control Loop
-                    /*      {
-                                ctrl_par velocity_ctrl_params_0;
-                                filter_par sensor_filter_params_0;
-                                hall_par hall_params_0;
-                                qei_par qei_params_0;
-
-                                init_velocity_control_param(velocity_ctrl_params_0);
-
-                                init_hall_param(hall_params_0);
-                                init_qei_param(qei_params_0);
-
-                                //Initialize sensor filter length
-                                init_sensor_filter_param(sensor_filter_params_0);
-
-                                // Control Loop
-                                velocity_control(velocity_ctrl_params_0,
-                                        sensor_filter_params_0, hall_params_0,
-                                        qei_params_0, SENSOR_USED, c_hall_p2_0, c_qei_p2_0,
-                                        c_velocity_ctrl_0, c_commutation_p2_0);
-                            }
-                    */
 
                             // Torque Control Loop
                             {
@@ -159,7 +147,6 @@ int main(void)
                                 init_hall_param(hall_params);
                                 init_qei_param(qei_params);
 
-
                                 // Control Loop
                                 torque_control( torque_ctrl_params, hall_params, qei_params, SENSOR_USED,
                                         c_adc, c_commutation_p1,  c_hall_p2,  c_qei_p3, c_torque_ctrl);
@@ -167,14 +154,14 @@ int main(void)
 	                }
 	            }
 
-	            //IFM - C21 node 0
+	            //IFM - C22 node 0
 	            on tile[NODE_0_IFM_TILE]:
 	            {
                     par
 	                {
 	                  // ADC Loop
-                      adc_ad7949_triggered(c_adc, c_adctrig, clk_adc, p_ifm_adc_sclk_conv_mosib_mosia_0, p_ifm_adc_misoa_0,
-                             p_ifm_adc_misob_0);
+                      adc_ad7949_triggered(c_adc, c_adctrig, clk_adc, p_ifm_adc_sclk_conv_mosib_mosia_0, p_ifm_adc_miso_0,
+                             p_ifm_adc_conv_0);
 
                       // PWM Loop
                       do_pwm_inv_triggered(c_pwm_ctrl, c_adctrig, p_ifm_dummy_port_0,
@@ -213,33 +200,10 @@ int main(void)
                             {
                                 //printstrln("I am 1");
                                 delay_seconds(1);
-                               // profile_velocity_test(c_velocity_ctrl_1, c_hall_p4_1);
                                 profile_torque_test(c_torque_ctrl_1);
                             }
-                /*            // Velocity Control Loop
-                            {
-                                ctrl_par velocity_ctrl_params_1;
-                                filter_par sensor_filter_params_1;
-                                hall_par hall_params_1;
-                                qei_par qei_params_1;
 
-                                init_velocity_control_param(velocity_ctrl_params_1);
-
-                                init_hall_param(hall_params_1);
-                                init_qei_param(qei_params_1);
-
-                                // Initialize sensor filter length
-                                init_sensor_filter_param(sensor_filter_params_1);
-
-                                // Control Loop
-                                velocity_control(velocity_ctrl_params_1,
-                                        sensor_filter_params_1, hall_params_1,
-                                        qei_params_1, SENSOR_USED, c_hall_p2_1, c_qei_p2_1,
-                                        c_velocity_ctrl_1, c_commutation_p2_1);
-                            }
-                */
-
-                            /* Torque Control Loop */
+                            // Torque Control Loop
                            {
                                 ctrl_par torque_ctrl_params_1;
                                 filter_par sensor_filter_params_1;
@@ -250,9 +214,6 @@ int main(void)
 
                                 init_hall_param(hall_params_1);
                                 init_qei_param(qei_params_1);
-
-                                // Initialize sensor filter length
-                               // init_sensor_filter_param(sensor_filter_params_1);
 
                                 torque_control( torque_ctrl_params_1, hall_params_1, qei_params_1, SENSOR_USED,
                                         c_adc_1, c_commutation_p1_1,  c_hall_p3_1,  c_qei_p3_1, c_torque_ctrl_1);
@@ -312,34 +273,10 @@ int main(void)
                             {
                                 //printstrln("I am 2");
                                 delay_seconds(0);
-                                //profile_velocity_test(c_velocity_ctrl_2, c_hall_p4_2);
                                 profile_torque_test(c_torque_ctrl_2);
                             }
 
-                /*          //   Velocity Control Loop
-                            {
-                                ctrl_par velocity_ctrl_params_2;
-                                filter_par sensor_filter_params_2;
-                                hall_par hall_params_2;
-                                qei_par qei_params_2;
-
-                                init_velocity_control_param(velocity_ctrl_params_2);
-
-                                init_hall_param(hall_params_2);
-                                init_qei_param(qei_params_2);
-
-                                // Initialize sensor filter length
-                                init_sensor_filter_param(sensor_filter_params_2);
-
-                                // Control Loop
-                                velocity_control(velocity_ctrl_params_2,
-                                        sensor_filter_params_2, hall_params_2,
-                                        qei_params_2, SENSOR_USED, c_hall_p2_2, c_qei_p2_2,
-                                        c_velocity_ctrl_2, c_commutation_p2_2);
-                            }
-                */
-
-                            /* Torque Control Loop */
+                             // Torque Control Loop
                             {
                                 ctrl_par torque_ctrl_params_2;
                                 filter_par sensor_filter_params_2;
@@ -350,9 +287,6 @@ int main(void)
 
                                 init_hall_param(hall_params_2);
                                 init_qei_param(qei_params_2);
-
-                                // Initialize sensor filter length
-                                //init_sensor_filter_param(sensor_filter_params_2);
 
                                 torque_control( torque_ctrl_params_2, hall_params_2, qei_params_2, SENSOR_USED,
                                         c_adc_2, c_commutation_p1_2,  c_hall_p3_2,  c_qei_p3_2, c_torque_ctrl_2);
@@ -403,6 +337,80 @@ int main(void)
 	                    }
 	                }
 	            }
+
+                //APP - C21 node 3
+                on tile[NODE_3_APP_TILE]:
+                {
+                    par {
+
+                            {
+                                //printstrln("I am 3");
+                                delay_seconds(0);
+                                //profile_velocity_test(c_velocity_ctrl_2, c_hall_p4_2);
+                                profile_torque_test(c_torque_ctrl_3);
+                            }
+
+                              // Torque Control Loop
+                            {
+                                ctrl_par torque_ctrl_params_3;
+                                filter_par sensor_filter_params_3;
+                                hall_par hall_params_3;
+                                qei_par qei_params_3;
+
+                                init_torque_control_param(torque_ctrl_params_3);
+
+                                init_hall_param(hall_params_3);
+                                init_qei_param(qei_params_3);
+
+                                torque_control( torque_ctrl_params_3, hall_params_3, qei_params_3, SENSOR_USED,
+                                        c_adc_3, c_commutation_p1_3,  c_hall_p3_3,  c_qei_p3_3, c_torque_ctrl_3);
+                            }
+                    }
+                }
+
+                //IFM - C21 node 3
+                on tile[NODE_3_IFM_TILE]:
+                {
+                    par
+                    {
+                        // ADC Loop
+                        adc_ad7949_triggered(c_adc_3, c_adctrig_3, clk_adc_3, p_ifm_adc_sclk_conv_mosib_mosia_3, p_ifm_adc_miso_3,
+                                p_ifm_adc_conv_3);
+
+                        // PWM Loop
+                        do_pwm_inv_triggered(c_pwm_ctrl_3, c_adctrig_3,
+                                p_ifm_dummy_port_3, p_ifm_motor_hi_3, p_ifm_motor_lo_3,
+                                clk_pwm_3);
+
+                        // Motor Commutation loop
+                        {
+                            hall_par hall_params_3;
+                            qei_par qei_params_3;
+                            commutation_par commutation_params_3;
+                            int init_state;
+                            init_hall_param(hall_params_3);
+                            init_qei_param(qei_params_3);
+                            commutation_sinusoidal(c_hall_p1_3, c_qei_p1_3, c_signal_3,
+                                    c_watchdog_3, c_commutation_p1_3,
+                                    c_commutation_p2_3, c_commutation_p3_3,
+                                    c_pwm_ctrl_3, p_ifm_esf_rstn_pwml_pwmh_3,
+                                    p_ifm_coastn_3, p_ifm_ff1_3, p_ifm_ff2_3,
+                                    hall_params_3, qei_params_3, commutation_params_3);
+                        }
+
+                        // Watchdog Server
+                        run_watchdog(c_watchdog_3, p_ifm_wd_tick_3,
+                                p_ifm_shared_leds_wden_3);
+
+                        // Hall Server
+                        {
+                            hall_par hall_params_3;
+                            run_hall(c_hall_p1_3, c_hall_p2_3, c_hall_p3_3,
+                                    c_hall_p4_3, c_hall_p5_3, c_hall_p6_3,
+                                    p_ifm_hall_3, hall_params_3);
+                        }
+                    }
+                }
 
 	        }
 
