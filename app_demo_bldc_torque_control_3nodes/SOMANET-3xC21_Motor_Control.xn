@@ -128,8 +128,8 @@
 
         <!-- Link Between Node #1(C21) and #2(C21) -->
         <Link Encoding="2wire" Delays="10,10">
-            <LinkEndpoint NodeId="0" Link="XLB" />
-            <LinkEndpoint NodeId="2" Link="XLB" />
+            <LinkEndpoint NodeId="1" Link="XLB" />
+            <LinkEndpoint NodeId="2" Link="XLA" />
         </Link>
         <!-- -->
 
@@ -155,7 +155,7 @@
 
         <!-- Link Between Node #2(C21) and #3(C21) -->
         <Link Encoding="2wire" Delays="10,10">
-            <LinkEndpoint NodeId="2" Link="XLA" />
+            <LinkEndpoint NodeId="3" Link="XLB" />
             <LinkEndpoint NodeId="4" Link="XLA" />
         </Link>
         <!-- -->

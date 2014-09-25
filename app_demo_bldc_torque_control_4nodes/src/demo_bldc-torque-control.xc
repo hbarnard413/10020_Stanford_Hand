@@ -129,8 +129,8 @@ int main(void)
 	            {
 	                par {
                             {
-                                //printstrln("I am 0");
-                                delay_seconds(2);
+                                printstrln("App starts....");
+                                delay_seconds(3);
                                 profile_torque_test(c_torque_ctrl);
                             }
 
@@ -199,7 +199,7 @@ int main(void)
 
                             {
                                 //printstrln("I am 1");
-                                delay_seconds(1);
+                                delay_seconds(2);
                                 profile_torque_test(c_torque_ctrl_1);
                             }
 
@@ -272,7 +272,7 @@ int main(void)
 
                             {
                                 //printstrln("I am 2");
-                                delay_seconds(0);
+                                delay_seconds(1);
                                 profile_torque_test(c_torque_ctrl_2);
                             }
 
