@@ -76,7 +76,7 @@ void velocity_control( ctrl_par & velocity_ctrl_params,
     int fet_state = 0;
     init_filter(filter_buffer, index, FILTER_SIZE_MAX);
 
-    printstr("*************************************\n    VELOCITY CONTROLLER STARTING\n*************************************\n");
+  //  printstr("*************************************\n    VELOCITY CONTROLLER STARTING\n*************************************\n");
 
     ts :> time;
     time += velocity_ctrl_params.Loop_time;

@@ -2,7 +2,7 @@
 <Network xmlns="http://www.xmos.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.xmos.com http://www.xmos.com">
     <Type>Multi-Board SOMANET DX System</Type>
-    <Name>SOMANET-C22-C21-C21-C21_Motor_Control</Name>
+    <Name>SOMANET-C21-C21-C21_Motor_Control</Name>
 
     <Declarations>
         <Declaration>tileref tile[6]</Declaration>
@@ -161,7 +161,7 @@
         <!-- -->
 
 
-        <!-- Node #2(C21) -->
+        <!-- Node #3(C21) -->
         <Link Encoding="5wire" Delays="0,1">
             <LinkEndpoint NodeId="4" Link="XLG" />
             <LinkEndpoint NodeId="5" Link="XLF" />

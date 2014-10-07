@@ -47,7 +47,7 @@ void position_control(ctrl_par &position_ctrl_params, hall_par &hall_params, qei
     int fet_state = 0;
     int init_state = INIT_BUSY; /* check commutation init */
 
-    printstr("*************************************\n    POSITION CONTROLLER STARTING\n*************************************\n");
+  //  printstr("*************************************\n    POSITION CONTROLLER STARTING\n*************************************\n");
 
 #ifdef DEBUG
     {

@@ -18,7 +18,7 @@
 #include <xscope_wrapper.h>
 #include <print.h>
 #include <gpio_client.h>
-#include <flash_somanet.h>
+//#include <flash_somanet.h>
 
 #include <commutation_client.h>
 #include <bldc_motor_init.h>
